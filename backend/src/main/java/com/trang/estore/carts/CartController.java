@@ -22,6 +22,7 @@ public class CartController {
     private final CartService cartService;
 
     @PostMapping
+    @Operation(summary = "Create a new cart")
     public ResponseEntity<CartDto> createCart(
             UriComponentsBuilder uriComponentsBuilder
     ){
@@ -31,22 +32,23 @@ public class CartController {
         return ResponseEntity.created(uri).body(cartDto);
     }
 
+    @Operation(summary = "Add an item into a cart")
     @PostMapping("/{cartId}/items")
-    @Operation(summary = "Adds a product to the cart")
     public ResponseEntity<CartItemDto> addCartItem(
-            @Parameter(description = "The ID of the cart")
             @PathVariable UUID cartId,
             @Valid @RequestBody AddProductCartDto addProductCartDto){
         var cartItemDto = cartService.addCartItem(cartId, addProductCartDto.getProductId());
         return ResponseEntity.ok(cartItemDto);
     }
 
+    @Operation(summary = "Get the information of a cart including all the cart items it has")
     @GetMapping("/{cartId}")
     public ResponseEntity<CartDto> getCart(@PathVariable UUID cartId){
         var cartDto = cartService.getCart(cartId);
         return ResponseEntity.ok(cartDto);
     }
 
+    @Operation(summary = "Change the quantity of an item in a cart")
     @PutMapping("/{cartId}/items/{productId}")
     public ResponseEntity<CartItemDto> updateCartItem(
             @PathVariable UUID cartId,
@@ -56,6 +58,7 @@ public class CartController {
         return ResponseEntity.ok(cartItemDto);
     }
 
+    @Operation(summary = "Remove an item in a cart with cartId and productId specified in path")
     @DeleteMapping("/{cartId}/items/{productId}")
     public ResponseEntity<Void> deleteCartItem(
             @PathVariable UUID cartId,
@@ -65,6 +68,7 @@ public class CartController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Clear a cart")
     @DeleteMapping("/{cartId}/items")
     public ResponseEntity<Void> deleteCartItems(
             @PathVariable UUID cartId

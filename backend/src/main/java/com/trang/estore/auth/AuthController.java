@@ -3,6 +3,8 @@ package com.trang.estore.auth;
 import com.trang.estore.users.UserDto;
 import com.trang.estore.users.UserMapper;
 import com.trang.estore.users.UserRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/auth")
 @AllArgsConstructor
+@Tag(name = "Auth")
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -25,6 +28,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
+    @Operation(summary = "Login with email and password")
     public ResponseEntity<JwtResponse> login(
             @Valid @RequestBody LoginDto loginDto,
             HttpServletResponse response
@@ -35,6 +39,7 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
+    @Operation(summary = "Refresh access token after expiration time")
     public ResponseEntity<JwtResponse> refresh(
             @CookieValue(value = "refreshToken") String refreshToken
     ){
@@ -44,6 +49,7 @@ public class AuthController {
     }
 
     @GetMapping("/me")
+    @Operation(summary = "Get the current authenticated user")
     public ResponseEntity<UserDto> me(){
         var user = authService.getCurrentUser();
         if (user == null) {

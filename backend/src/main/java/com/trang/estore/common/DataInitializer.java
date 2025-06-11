@@ -14,14 +14,9 @@ public class DataInitializer {
     @Bean
     public CommandLineRunner initUser(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         return args -> {
-            if (userRepository.findByEmail("minhtrang03@gmail.com").isEmpty()) {
-                User user = new User();
-                user.setName("trang");
-                user.setEmail("minhtrang03@gmail.com");
-                user.setPassword(passwordEncoder.encode("123456"));
-                user.setRole(Role.USER);
-                userRepository.save(user);
-            }
+            var user = userRepository.findByEmail("minhtrang03@gmail.com").orElseThrow();
+            user.setPassword(passwordEncoder.encode("123456"));
+            userRepository.save(user);
         };
     }
 }

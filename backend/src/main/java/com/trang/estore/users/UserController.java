@@ -1,6 +1,8 @@
 package com.trang.estore.users;
 
 import com.trang.estore.common.ErrorDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/users")
+@Tag(name = "Users")
 public class UserController {
 
     private final UserRepository userRepository;
@@ -20,11 +23,13 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
 
+    @Operation(summary = "Get all users, can specify the sort method, either by name or email (optional)")
     @GetMapping
     public Iterable<UserDto> getAllUsers(@RequestParam( required = false, defaultValue = "", name = "sort") String sortBy) {
         return userService.getAllUsers(sortBy);
     }
 
+    @Operation(summary = "Get a specific user")
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUser(@PathVariable Long id) {
         var userDto = userService.getUser(id);
@@ -32,6 +37,7 @@ public class UserController {
         return ResponseEntity.ok(userDto);
     }
 
+    @Operation(summary = "Register a new user")
     @PostMapping
     //MethodArgumentNotValidException
     public ResponseEntity<?> registerUser(
@@ -45,6 +51,7 @@ public class UserController {
         return ResponseEntity.created(uri).body(userDto);
     }
 
+    @Operation(summary = "Update a user's information")
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateUser(
             @PathVariable(name = "id") Long id,
@@ -55,12 +62,14 @@ public class UserController {
 
     }
 
+    @Operation(summary = "Delete a user from the database")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Change the password of a user")
     @PostMapping("/{id}/password-change")
     public ResponseEntity<Void> changePassword(@PathVariable Long id, @RequestBody ChangePasswordRequest request) {
         userService.changePassword(id, request);

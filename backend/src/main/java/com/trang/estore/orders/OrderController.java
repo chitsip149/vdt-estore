@@ -5,6 +5,8 @@ import com.trang.estore.carts.CartNotFoundException;
 import com.trang.estore.common.ErrorDto;
 
 import com.trang.estore.payments.PaymentException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +17,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/orders")
 @RequiredArgsConstructor
+@Tag(name = "Orders")
 public class OrderController {
 
     private final OrderService orderService;
 
     @GetMapping
+    @Operation(summary = "Get all the orders of current authenticated user")
     public ResponseEntity<List<OrderDto>> getAllOrders() {
         var list = orderService.getOrders();
         System.out.println(list);
@@ -28,6 +32,7 @@ public class OrderController {
 
     }
 
+    @Operation(summary = "Get the information of an order")
     @GetMapping("/{orderId}")
     public ResponseEntity<OrderDto> getOrder(@PathVariable Long orderId) {
         var orderDto = orderService.getOrder(orderId);

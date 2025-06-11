@@ -1,5 +1,7 @@
 package com.trang.estore.products;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/products")
 @AllArgsConstructor
+@Tag(name = "Products")
 public class ProductController {
 
     private final ProductRepository productRepository;
@@ -18,6 +21,7 @@ public class ProductController {
     private final ProductMapper productMapper;
 
     @GetMapping
+    @Operation(summary = "Get all products, can specify a category (optional)")
     public List<ProductDto> getProducts(@RequestParam (required = false, name = "categoryId") Byte categoryId) {
         if (categoryId == null) {
             return productRepository.findAll()
@@ -32,6 +36,7 @@ public class ProductController {
                 .collect(Collectors.toList());
     }
 
+    @Operation(summary = "Get a specific product")
     @GetMapping("/{id}")
     public ResponseEntity<ProductDto> getProductById(@PathVariable Long id) {
         var product = productRepository.findById(id).orElse(null);
@@ -42,6 +47,7 @@ public class ProductController {
     }
 
     @PostMapping
+    @Operation(summary = "Create a new product")
     public ResponseEntity<ProductDto> createProduct(
             @RequestBody ProductDto productDto,
             UriComponentsBuilder uriBuilder) {
@@ -56,6 +62,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Update a product information")
     public ResponseEntity<ProductDto> updateProduct(
             @PathVariable Long id,
             @RequestBody ProductDto productDto) {
@@ -72,6 +79,7 @@ public class ProductController {
         return ResponseEntity.ok(productMapper.toDto(product));
     }
 
+    @Operation(summary = "Delete a product from database")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         var product = productRepository.findById(id).orElse(null);
