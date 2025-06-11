@@ -1,0 +1,36 @@
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: vdt-e-store
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    ports:
+      - "3307:3306"
+    networks:
+      - my-store
+
+  spring-app:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: spring-container
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql-db
+    environment:
+      MYSQL_DATASOURCE_URL: jdbc:mysql://localhost:3307/vdt-e-store?autoReconnect=true&useSSL=false
+      MYSQL_USERNAME: root
+      MYSQL_PASSWORD: root
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 10
+    networks:
+      - my-store
+networks:
+  my-store:
+    name: my-store
