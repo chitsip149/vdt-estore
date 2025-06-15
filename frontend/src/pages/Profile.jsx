@@ -14,7 +14,7 @@ const Profile = () => {
 
   const fetchProfile = async () => {
     try {
-      const res = await fetch(`${process.env.BACKEND_URL}/profile`, {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error("Failed to fetch profile");
@@ -27,7 +27,7 @@ const Profile = () => {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch(`${process.env.BACKEND_URL}/orders`, {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/orders`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error("Failed to fetch orders");
