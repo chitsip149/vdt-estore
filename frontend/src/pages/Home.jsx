@@ -22,7 +22,7 @@ const Home = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch(`${process.env.BACKEND_URL}/products`, {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/products`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
