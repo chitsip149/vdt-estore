@@ -6,7 +6,7 @@ spring:
     accessTokenExpiration: 7200 #2h
     refreshTokenExpiration: 604800 #7d
   profiles:
-    active: dev
+    active: prod
 
 stripe:
   secretKey: ${STRIPE_SECRET_KEY}
