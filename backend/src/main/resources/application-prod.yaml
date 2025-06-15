@@ -4,4 +4,4 @@ spring:
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${VHxnrmXvOnXJWJaasrghXrcZCWYMMmIA}
 
-websiteUrl: https://mystore.com
+websiteUrl: https://vdt-estore-1.onrender.com
