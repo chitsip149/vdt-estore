@@ -22,7 +22,7 @@ const Home = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch("http://localhost:8080/products", {
+      const res = await fetch(`${process.env.BACKEND_URL}/products`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -37,7 +37,7 @@ const Home = () => {
 
   const createCart = async () => {
     try {
-      const res = await fetch("http://localhost:8080/carts", {
+      const res = await fetch(`${process.env.BACKEND_URL}/carts`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -54,7 +54,7 @@ const Home = () => {
 
   const fetchCartItemCount = async (cartId) => {
     try {
-      const res = await fetch(`http://localhost:8080/carts/${cartId}`, {
+      const res = await fetch(`${process.env.BACKEND_URL}/carts/${cartId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -76,7 +76,7 @@ const Home = () => {
         return;
       }
 
-      const res = await fetch(`http://localhost:8080/carts/${cartId}/items`, {
+      const res = await fetch(`${process.env.BACKEND_URL}/carts/${cartId}/items`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
