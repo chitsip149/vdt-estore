@@ -14,7 +14,7 @@ const Cart = () => {
     let cartId = localStorage.getItem("cartId");
 
     try {
-      const res = await fetch(`http://localhost:8080/carts/${cartId}`, {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/carts/${cartId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -25,7 +25,7 @@ const Cart = () => {
       setTotalPrice(data.totalPrice || 0);
     } catch {
       localStorage.removeItem("cartId");
-      const newRes = await fetch("http://localhost:8080/carts", { method: "POST" });
+      const newRes = await fetch(`${process.env.REACT_APP_BACKEND_URL}/carts`, { method: "POST" });
       if (newRes.ok) {
         const newCart = await newRes.json();
         localStorage.setItem("cartId", newCart.id);
@@ -36,7 +36,7 @@ const Cart = () => {
 
   const fetchCart = async (cartId) => {
     try {
-      const res = await fetch(`http://localhost:8080/carts/${cartId}`, {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/carts/${cartId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -52,7 +52,7 @@ const Cart = () => {
     const cartId = localStorage.getItem("cartId");
 
     try {
-      await fetch(`http://localhost:8080/carts/${cartId}/items/${productId}`, {
+      await fetch(`${process.env.REACT_APP_BACKEND_URL}/carts/${cartId}/items/${productId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -70,7 +70,7 @@ const Cart = () => {
     const cartId = localStorage.getItem("cartId");
 
     try {
-      await fetch(`http://localhost:8080/carts/${cartId}/items/${productId}`, {
+      await fetch(`${process.env.REACT_APP_BACKEND_URL}/carts/${cartId}/items/${productId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -84,7 +84,7 @@ const Cart = () => {
     const cartId = localStorage.getItem("cartId");
 
     try {
-      const res = await fetch("http://localhost:8080/checkout", {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/checkout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
