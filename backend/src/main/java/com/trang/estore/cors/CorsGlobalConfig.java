@@ -13,7 +13,7 @@ public class CorsGlobalConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://vdt-estore-1.onrender.com")
+                        .allowedOrigins("https://vdt-estore.onrender.com")
                         .allowedMethods("*")
                         .allowedHeaders("*")
                         .allowCredentials(true);
