@@ -16,4 +16,7 @@ This is a simple online bookstore website where users can browse books, add them
 ### Frontend
 - ReactJS  
 - Axios  
-- React Router  
+- React Router
+
+## Demo Video
+[Demo Video](https://www.youtube.com/watch?v=aqBjViOaqQo&ab_channel=MinhTrangNguyen)
